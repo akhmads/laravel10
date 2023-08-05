@@ -20,6 +20,12 @@
   @stack('head')
 
   <title>{{ config('app.name', 'Hypercode') }} - @yield('title')</title>
+
+  <style type="text/css">
+    .sorticon{ visibility: hidden; color: darkgray; }
+    .sort:hover .sorticon{ visibility: visible; }
+    .sort:hover{ cursor: pointer; }
+  </style>
 </head>
 <body>
 
