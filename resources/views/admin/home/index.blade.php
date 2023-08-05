@@ -10,10 +10,10 @@
   <h1>Home</h1>
 
   <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="card-title m-0 me-2">Todo</h5>
+                <h5 class="card-title m-0 me-2">Users Manager</h5>
                 @livewire('user.user-create')
             </div>
             <div class="table-responsive text-nowrap">

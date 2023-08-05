@@ -21,6 +21,13 @@
             </a>
           </li>
 
+          <li class="menu-item {{ request()->is('livewire*') ? 'active' : '' }}">
+            <a href="{{ url('livewire') }}" class="menu-link">
+              <i class="menu-icon tf-icons fa fa-user"></i>
+              <div data-i18n="">Component</div>
+            </a>
+          </li>
+
         </ul>
       </aside>
       <!-- / Menu -->

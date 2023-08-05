@@ -21,6 +21,7 @@ class UserTable extends Component
     public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
     public $name;
     public $email;
+    public $selectedID;
 
     public function render()
     {
@@ -43,30 +44,19 @@ class UserTable extends Component
         $this->sortLink = '<i class="sorticon fa-solid fa-caret-'.$caretOrder.'"></i>';
         $this->orderColumn = $columnName;
 
-   }
-
-    public function store()
-    {
-        $this->validate([
-            'name'  => 'required|max:200',
-            'email'  => 'required|email|max:200',
-        ]);
-
-        User::create([
-            'name' => $this->name,
-            'status' => '0',
-        ]);
-
-        $this->name = null;
-        $this->email = null;
-
-        session()->flash('success','User stored.');
     }
 
-    public function destroy($id)
+    public function setID($id)
     {
 
-        User::destroy($id);
+        $this->selectedID = $id;
+    }
+
+    public function destroy()
+    {
+
+        User::destroy($this->selectedID);
+        $this->emit('userDeleted');
         session()->flash('success','User deleted.');
     }
 }

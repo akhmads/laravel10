@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LivewireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ use App\Http\Controllers\HomeController;
 // });
 
 Route::get('/', [HomeController::class,'index'])->name('home.index');
+Route::get('/livewire', [LivewireController::class,'index'])->name('livewire.index');
