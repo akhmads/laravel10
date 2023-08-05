@@ -4,16 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Role extends Model
+class RoleUser extends Model
 {
     use HasFactory;
 
-    protected $table = 'role';
+    protected $table = 'role_user';
     protected $guarded = ['id'];
-
-    public function users()
-    {
-        return $this->belongsToMany(Role::class, 'role_user');
-    }
 }

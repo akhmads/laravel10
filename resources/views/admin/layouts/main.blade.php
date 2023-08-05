@@ -78,5 +78,6 @@
 
 <!-- Stackscript-->
 @stack('scripts')
+
 </body>
 </html>
