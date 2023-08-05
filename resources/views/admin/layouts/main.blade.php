@@ -14,8 +14,8 @@
   @livewireStyles
 
   <!-- Core head -->
-  @include('layouts.partials.head', ['vendor' => isset($vendor)?$vendor:[]])
-  
+  @include('admin.partials.head', ['vendor' => isset($vendor)?$vendor:[]])
+
   <!-- head stack -->
   @stack('head')
 
@@ -26,20 +26,20 @@
   <!-- Layout wrapper -->
   <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
-      
-      @include('layouts.partials.menu')
+
+      @include('admin.partials.menu')
 
       <!-- Layout container -->
       <div class="layout-page">
 
-        @include('layouts.partials.navbar')
+        @include('admin.partials.navbar')
 
         <!-- Content wrapper -->
         <div class="content-wrapper">
-          
+
           <!-- Content -->
           <div class="container-xxl flex-grow-1 container-p-y">
-            
+
             @yield('content')
 
           </div><!-- /Content -->
@@ -57,13 +57,13 @@
 
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
-    
+
   </div><!-- /Layout wrapper -->
 
 @livewireScripts
 
-<!-- Core script -->  
-@include('layouts.partials.script', ['vendor' => isset($vendor)?$vendor:[]])
+<!-- Core script -->
+@include('admin.partials.script', ['vendor' => isset($vendor)?$vendor:[]])
 
 <!-- Stackscript-->
 @stack('scripts')

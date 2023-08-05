@@ -13,31 +13,14 @@
         <div class="menu-inner-shadow"></div>
 
         <ul class="menu-inner py-1">
-          <!-- Page -->
-          <li class="menu-item {{ request()->is('customer*') ? 'active' : '' }}">
-            <a href="{{ route('customer.index') }}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-home-circle"></i>
-              <div data-i18n="Customer">Customer</div>
-            </a>
-          </li>
-          <li class="menu-item {{ request()->is('contact*') ? 'active' : '' }}">
-            <a href="{{ route('contact.index') }}" class="menu-link">
-              <i class="menu-icon tf-icons fa fa-file-alt"></i>
-              <div data-i18n="Contact">Contact</div>
-            </a>
-          </li>
-          {{-- <li class="menu-item">
-            <a href="page-2.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
-              <div data-i18n="Sales Invoice">Sales Invoice</div>
-            </a>
-          </li> --}}
+
           <li class="menu-item {{ request()->is('user*') ? 'active' : '' }}">
-            <a href="{{ route('user.index') }}" class="menu-link">
+            <a href="{{ url('admin/user') }}" class="menu-link">
               <i class="menu-icon tf-icons fa fa-user"></i>
               <div data-i18n="User">User</div>
             </a>
           </li>
+
         </ul>
       </aside>
       <!-- / Menu -->
