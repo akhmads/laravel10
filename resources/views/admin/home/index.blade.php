@@ -13,7 +13,7 @@
     <div class="col-md-4">
       @livewire('auth.change-profile')
     </div>
-    <div class="col-md-4">
+    {{-- <div class="col-md-4">
       @livewire('auth.change-avatar')
     </div>
     <div class="col-md-4">
@@ -29,7 +29,7 @@
           @livewire('todo.todo-table')
         </div>
       </div>
-    </div>
+    </div> --}}
   </div>
 
 @endsection

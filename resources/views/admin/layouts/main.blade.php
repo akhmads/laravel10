@@ -60,13 +60,12 @@
 
   </div><!-- /Layout wrapper -->
 
-@livewireScripts
-
 <!-- Core script -->
 @include('admin.partials.script', ['vendor' => isset($vendor)?$vendor:[]])
 
 <!-- Stackscript-->
 @stack('scripts')
 
+@livewireScripts
 </body>
 </html>
