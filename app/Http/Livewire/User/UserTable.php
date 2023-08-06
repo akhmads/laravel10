@@ -3,25 +3,27 @@
 namespace App\Http\Livewire\User;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Hash;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Models\User;
 
 class UserTable extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
-    protected $listeners = [
-        'userStored' => 'render',
-        'userUpdated' => 'render',
-        'userDeleted' => 'render',
-    ];
     public $orderColumn = "created_at";
     public $sortOrder = "desc";
     public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
+    public $set_id;
+
     public $name;
     public $email;
-    public $selectedID;
+    public $password;
+    public $avatar;
+    public $showAvatar;
+    public $role;
 
     public function render()
     {
@@ -46,17 +48,100 @@ class UserTable extends Component
 
     }
 
-    public function setID($id)
+    public function formReset()
     {
+        $this->set_id = null;
+        $this->name = null;
+        $this->email = null;
+        $this->password = null;
+        $this->avatar = null;
+        $this->role = null;
+    }
 
-        $this->selectedID = $id;
+    public function store()
+    {
+        $this->validate([
+            'name'  => 'required|max:100',
+            'email' => 'required|email|unique:users,email',
+            'password' => ['required','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/'],
+            'avatar' => 'required|image|max:2048|mimes:jpg,jpeg,png,webp',
+            'role'  => 'required',
+        ]);
+
+        $avatar = $this->avatar->store('/', 'avatar_disk');
+
+        $user = User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => Hash::make($this->password),
+            'avatar' => $avatar,
+            'role' => $this->role,
+        ]);
+
+        $this->formReset();
+        session()->flash('success','User saved.');
+        $this->dispatchBrowserEvent('close-modal');
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+        if( $user ) {
+            $this->set_id = $id;
+            $this->name = $user->name;
+            $this->email = $user->email;
+            $this->showAvatar = $user->avatar;
+            $this->role = $user->role;
+        }else{
+            return redirect()->to('/admin');
+        }
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'name'  => 'required|max:100',
+            'email' => 'required|email|unique:users,email,'.$this->set_id,
+            'password' => ['nullable','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/'],
+            'avatar' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
+            'role'  => 'required',
+        ]);
+
+
+        $user = User::find($this->set_id);
+
+        $user->update([
+            'name' => $this->name,
+            'email' => $this->email,
+            'role' => $this->role,
+        ]);
+
+        if( !empty($this->password) ){
+            $user->password = Hash::make($this->password);
+            $user->save();
+        }
+
+        if( !empty($this->avatar) ){
+            $avatar = $this->avatar->store('/', 'avatar_disk');
+            $this->avatar = $avatar;
+            $user->save();
+        }
+
+        $this->formReset();
+        session()->flash('success','User updated.');
+        $this->dispatchBrowserEvent('close-modal');
+    }
+
+    public function delete($id)
+    {
+        $this->set_id = $id;
     }
 
     public function destroy()
     {
 
-        User::destroy($this->selectedID);
-        $this->emit('userDeleted');
+        User::destroy($this->set_id);
         session()->flash('success','User deleted.');
+        $this->dispatchBrowserEvent('close-modal');
     }
 }

@@ -10,17 +10,6 @@
   <h1>Home</h1>
 
   <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="card-title m-0 me-2">Users Manager</h5>
-                @livewire('user.user-create')
-            </div>
-            <div class="table-responsive text-nowrap">
-                @livewire('user.user-table')
-            </div>
-        </div>
-    </div>
     {{-- <div class="col-md-4">
       @livewire('auth.change-profile')
     </div>

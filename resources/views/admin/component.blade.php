@@ -7,19 +7,7 @@
 
   <x-flash-alert />
 
-  <h1><span class="text-muted fw-light">CRUD /</span> Table</h1>
-
-  <div class="card">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="card-title m-0 me-2">Users Manager</h5>
-        @livewire('user.user-create')
-    </div>
-    <div class="table-responsive text-nowrap">
-        @livewire('user.user-table')
-    </div>
-  </div>
-
-  <h1 class="mt-5"><span class="text-muted fw-light">Role /</span> Master</h1>
+  <h1 class=""><span class="text-muted fw-light">Role /</span> Master</h1>
 
   <div class="card">
     <div class="card-header d-flex align-items-center justify-content-between">
