@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /*DB::listen(function (QueryExecuted $query) {
+        DB::listen(function (QueryExecuted $query) {
             Log::channel('sql_query')->info(
                 'SQL Query',
                 [
@@ -31,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
                     $query->time,
                 ]
             );
-        });*/
+        });
     }
 }

@@ -24,11 +24,81 @@ class UserSeeder extends Seeder
             'role' => 'admin',
         ]);
         User::create([
-            'name' => 'Guru 1',
-            'email' => 'guru_satu@gmail.com',
+            'name' => 'Akhmad Shaleh',
+            'email' => 'akhmadshaleh@gmail.com',
             'password' => Hash::make('q1w2e3r4'),
             'avatar' => 'default.png',
             'role' => 'guru',
+        ]);
+        User::create([
+            'name' => 'Munajat Wisnugroho',
+            'email' => 'mwisnugroho@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'Teddo Tandiyono',
+            'email' => 'teddo@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'guru',
+        ]);
+        User::create([
+            'name' => 'Carolus Subroto',
+            'email' => 'carolus@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'Calvin Chan',
+            'email' => 'calvin@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'Miftahul Ulumuddin',
+            'email' => 'udin@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'John Doe',
+            'email' => 'john@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'Jane Doe',
+            'email' => 'jane@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'Taylor Otwell',
+            'email' => 'taylor@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'Caleb Porzio',
+            'email' => 'caleb@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
+        ]);
+        User::create([
+            'name' => 'Popilas Korov',
+            'email' => 'popilas@gmail.com',
+            'password' => Hash::make('q1w2e3r4'),
+            'avatar' => 'default.png',
+            'role' => 'siswa',
         ]);
 
         Role::create(['name' => 'user.index']);

@@ -16,7 +16,7 @@
 
           <li class="menu-item {{ request()->is('livewire*') ? 'active' : '' }}">
             <a href="{{ url('livewire') }}" class="menu-link">
-              <i class="menu-icon tf-icons fa fa-user"></i>
+              <i class="menu-icon tf-icons fa fa-cube"></i>
               <div data-i18n="">Component</div>
             </a>
           </li>
@@ -40,6 +40,7 @@
               </ul>
           </li>
 
+          @can('admin')
           <li class="menu-item {{ request()->routeIs('system*') ? 'active open' : '' }}">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons fa fa-cog"></i>
@@ -58,6 +59,7 @@
                 </li>
               </ul>
           </li>
+          @endcan
 
         </ul>
       </aside>

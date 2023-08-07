@@ -13,9 +13,12 @@ class UserTable extends Component
     use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
-    public $orderColumn = "created_at";
+    protected $listeners = ['reloadTable' => 'render'];
+    public $sortColumn = "created_at";
     public $sortOrder = "desc";
     public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
+    public $searchKeyword = '';
+    public $roleFilter = '';
     public $set_id;
 
     public $name;
@@ -27,10 +30,22 @@ class UserTable extends Component
 
     public function render()
     {
-        $users = User::orderby($this->orderColumn,$this->sortOrder)->select('*');
-        $users = $users->paginate(5);
+        $users = User::orderby($this->sortColumn,$this->sortOrder)->select('*');
+        if(!empty($this->searchKeyword)){
+            $users->orWhere('name','like',"%".$this->searchKeyword."%");
+            $users->orWhere('email','like',"%".$this->searchKeyword."%");
+        }
+        if(!empty($this->roleFilter)){
+            $users->orWhere('role','=',$this->roleFilter);
+        }
+        $users = $users->paginate(10);
 
         return view('livewire.user.user-table', [ 'users' => $users ]);
+    }
+
+    public function updated()
+    {
+        $this->resetPage();
     }
 
     public function sortOrder($columnName="")
@@ -44,8 +59,12 @@ class UserTable extends Component
             $caretOrder = "up";
         }
         $this->sortLink = '<i class="sorticon fa-solid fa-caret-'.$caretOrder.'"></i>';
-        $this->orderColumn = $columnName;
+        $this->sortColumn = $columnName;
+    }
 
+    public function roleFilter($role)
+    {
+        $this->roleFilter = $role;
     }
 
     public function formReset()
@@ -123,7 +142,7 @@ class UserTable extends Component
 
         if( !empty($this->avatar) ){
             $avatar = $this->avatar->store('/', 'avatar_disk');
-            $this->avatar = $avatar;
+            $user->avatar = $avatar;
             $user->save();
         }
 

@@ -5,16 +5,21 @@
 
 @section('content')
 
-  <h2><span class="text-muted fw-light">User /</span> Manager</h2>
+<div class="d-flex align-items-center justify-content-between">
+    <h2 class="fs-3"><span class="text-muted fw-light">User /</span> Manager</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url('/admin') }}">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0);">System</a>
+            </li>
+            <li class="breadcrumb-item active">User Manager</li>
+        </ol>
+    </nav>
+</div>
 
-  <div class="card">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        {{-- <h5 class="card-title m-0 me-2">User Master</h5> --}}
-        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#UserCreateModal"><i class="fa fa-plus me-2"></i>Create New</button>
-    </div>
-    <div class="table-responsive text-nowrap">
-        @livewire('user.user-table')
-    </div>
-  </div>
+@livewire('user.user-table')
 
 @endsection
