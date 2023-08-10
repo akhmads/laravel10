@@ -5,14 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Tapel extends Model
 {
     use HasFactory;
 
-    protected $table = 'menu';
+    protected $table = 'tapel';
     protected $guarded = ['id'];
-
-    public function childs() {
-        return $this->hasMany('App\Models\Menu','parent_id','id')->orderBy('ord','asc');
-    }
 }

@@ -30,6 +30,7 @@
     .sorticon{ visibility: hidden; color: darkgray; }
     .sort:hover .sorticon{ visibility: visible; }
     .sort:hover{ cursor: pointer; }
+    .sortable-chosen { background-color: #f2f2f2; }
   </style>
 </head>
 <body>
@@ -52,6 +53,10 @@
           <div class="container-xxl flex-grow-1 container-p-y">
 
             @yield('content')
+
+            @isset($slot)
+            {{ $slot }}
+            @endisset
 
           </div><!-- /Content -->
 

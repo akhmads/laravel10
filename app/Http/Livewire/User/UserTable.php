@@ -67,6 +67,13 @@ class UserTable extends Component
         $this->roleFilter = $role;
     }
 
+    public function closeModal()
+    {
+        $this->resetErrorBag();
+        $this->resetValidation();
+        $this->dispatchBrowserEvent('close-modal');
+    }
+
     public function formReset()
     {
         $this->set_id = null;
@@ -75,6 +82,9 @@ class UserTable extends Component
         $this->password = null;
         $this->avatar = null;
         $this->role = null;
+
+        $this->resetErrorBag();
+        $this->resetValidation();
     }
 
     public function store()

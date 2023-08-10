@@ -5,7 +5,7 @@
         </div>
     @endif --}}
     <div class="card">
-        <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-header d-md-flex align-items-center justify-content-between">
             {{-- <h5 class="card-title m-0 me-2">User Master</h5> --}}
             <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model="searchKeyword" >
             <div class="btn-group shadow-sm">

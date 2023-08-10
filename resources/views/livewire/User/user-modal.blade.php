@@ -5,7 +5,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel3">Create User</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
         </div>
         <form wire:submit.prevent="store">
         <div class="modal-body">
@@ -66,7 +66,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-label-secondary" {{--data-bs-dismiss="modal"--}} wire:click="closeModal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
         </form>
@@ -80,7 +80,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Edit User</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
         </div>
         <form wire:submit.prevent="update">
         <div class="modal-body">
@@ -144,7 +144,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-label-secondary" {{--data-bs-dismiss="modal"--}} wire:click="closeModal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
         </form>
