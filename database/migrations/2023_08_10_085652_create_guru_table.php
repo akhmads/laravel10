@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('guru', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('nip',100)->nullable("");
+            $table->string('gender',50)->nullable("");
             $table->timestamps();
         });
     }

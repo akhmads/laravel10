@@ -1,10 +1,6 @@
 <div>
     @section('title', 'Tahun Pelajaran')
-    @if (session()->has('success'))
-        <div class="px-3">
-            <p class="alert alert-success mb-3">{{ session('success') }}</p>
-        </div>
-    @endif
+    <x-flash-alert />
     <div class="card">
         <div class="card-header d-md-flex align-items-center justify-content-between">
             {{-- <h5 class="card-title m-0 me-2">Tapel Master</h5> --}}

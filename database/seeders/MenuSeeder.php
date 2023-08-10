@@ -33,6 +33,11 @@ class MenuSeeder extends Seeder
             'url' => 'admin/program-studi',
         ]);
         Menu::create([
+            'title' => 'Guru',
+            'parent_id' => '1',
+            'url' => 'admin/guru',
+        ]);
+        Menu::create([
             'title' => 'Component',
             'parent_id' => '0',
             'url' => 'livewire',

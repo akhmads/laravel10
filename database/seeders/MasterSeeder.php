@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Tapel;
 use App\Models\Prodi;
+use App\Models\Guru;
 
 class MasterSeeder extends Seeder
 {
@@ -32,6 +33,17 @@ class MasterSeeder extends Seeder
         Prodi::create([
             'code' => 'DKV',
             'name' => 'Desain Komunikasi Visual',
+        ]);
+
+        Guru::create([
+            'name' => 'Akhmad Shaleh, S.Kom',
+            'nip' => '91077654321',
+            'gender' => 'L',
+        ]);
+        Guru::create([
+            'name' => 'Raisa Andriana, S.T',
+            'nip' => '80076543212',
+            'gender' => 'P',
         ]);
     }
 }
