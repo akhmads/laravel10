@@ -40,8 +40,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/livewire', [LivewireController::class,'index'])->name('livewire.index');
     Route::get('/admin', [HomeController::class,'index'])->name('admin.index');
     Route::prefix('/admin')->group(function(){
-        Route::get('/tahun-pelajaran', [TahunPelajaranController::class,'index'])->name('master.tahun-pelajaran');
-        Route::get('/program-studi', [TahunPelajaranController::class,'index'])->name('master.program-studi');
         // system
         Route::get('/user', [UserController::class,'index'])->name('system.user');
         Route::get('/menu-manager', MenuManager::class)->name('system.menu-manager');
