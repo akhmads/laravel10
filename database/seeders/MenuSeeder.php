@@ -21,6 +21,17 @@ class MenuSeeder extends Seeder
             'url' => '#',
             'scope' => 'master*',
             'icon' => 'fa fa-database',
+            'ord' => '3',
+        ]);
+        Menu::create([
+            'title' => 'Siswa',
+            'parent_id' => '1',
+            'url' => 'admin/siswa',
+        ]);
+        Menu::create([
+            'title' => 'Guru',
+            'parent_id' => '1',
+            'url' => 'admin/guru',
         ]);
         Menu::create([
             'title' => 'Tahun Pelajaran',
@@ -33,9 +44,12 @@ class MenuSeeder extends Seeder
             'url' => 'admin/program-studi',
         ]);
         Menu::create([
-            'title' => 'Guru',
-            'parent_id' => '1',
-            'url' => 'admin/guru',
+            'title' => 'Home',
+            'parent_id' => '0',
+            'url' => '/',
+            'scope' => '',
+            'icon' => 'fa fa-home',
+            'ord' => '1',
         ]);
         Menu::create([
             'title' => 'Component',
@@ -43,6 +57,7 @@ class MenuSeeder extends Seeder
             'url' => 'livewire',
             'scope' => 'livewire.index',
             'icon' => 'fa fa-cube',
+            'ord' => '2',
         ]);
     }
 }

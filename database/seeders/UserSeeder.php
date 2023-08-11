@@ -102,13 +102,13 @@ class UserSeeder extends Seeder
             'role' => 'siswa',
         ]);
 
-        Role::create(['name' => 'user.index']);
-        Role::create(['name' => 'user.create']);
-        Role::create(['name' => 'user.update']);
-        Role::create(['name' => 'user.delete']);
+        // Role::create(['name' => 'user.index']);
+        // Role::create(['name' => 'user.create']);
+        // Role::create(['name' => 'user.update']);
+        // Role::create(['name' => 'user.delete']);
 
-        RoleUser::create(['user_id' => '1','role_id' => '1']);
-        RoleUser::create(['user_id' => '1','role_id' => '2']);
-        RoleUser::create(['user_id' => '1','role_id' => '3']);
+        // RoleUser::create(['user_id' => '1','role_id' => '1']);
+        // RoleUser::create(['user_id' => '1','role_id' => '2']);
+        // RoleUser::create(['user_id' => '1','role_id' => '3']);
     }
 }

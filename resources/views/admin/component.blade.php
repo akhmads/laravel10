@@ -35,16 +35,8 @@
     </div>
   </div>
 
-  <h1 class="mt-5 mb-3"><span class="text-muted fw-light">Role /</span> Master</h1>
-
-  <div class="card">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="card-title m-0 me-2">Role Master</h5>
-        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#RoleCreateModal"><i class="fa fa-plus me-2"></i>Create New</button>
-    </div>
-    <div class="table-responsive text-nowrap">
-        @livewire('role.role-table')
-    </div>
+  <h1 class="mt-5 mb-3"><span class="text-muted fw-light">User /</span> Master</h1>
+    @livewire('user.user-table')
   </div>
 
 @endsection

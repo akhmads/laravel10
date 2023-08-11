@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Tapel;
+use App\Models\Siswa;
 
-class TapelManager extends Component
+class SiswaManager extends Component
 {
     use WithPagination;
 
@@ -18,17 +18,20 @@ class TapelManager extends Component
     public $roleFilter = '';
     public $set_id;
 
-    public $tapel;
+    public $name;
+    public $nis;
+    public $gender;
 
     public function render()
     {
-        $tapel = Tapel::orderby($this->sortColumn,$this->sortOrder)->select('*');
+        $siswa = Siswa::orderby($this->sortColumn,$this->sortOrder)->select('*');
         if(!empty($this->searchKeyword)){
-            $tapel->orWhere('tapel','like',"%".$this->searchKeyword."%");
+            $siswa->orWhere('name','like',"%".$this->searchKeyword."%");
+            $siswa->orWhere('nis','like',"%".$this->searchKeyword."%");
         }
-        $tapels = $tapel->paginate(10);
+        $siswas = $siswa->paginate(10);
 
-        return view('livewire.master.tapel-manager', [ 'tapels' => $tapels ]);
+        return view('livewire.master.siswa-manager', [ 'siswas' => $siswas ]);
     }
 
     public function updated()
@@ -61,7 +64,9 @@ class TapelManager extends Component
     public function formReset()
     {
         $this->set_id = null;
-        $this->tapel = null;
+        $this->nis = null;
+        $this->name = null;
+        $this->gender = null;
 
         $this->resetErrorBag();
         $this->resetValidation();
@@ -69,36 +74,38 @@ class TapelManager extends Component
 
     public function store()
     {
+        $rules = [
+            'nis'  => 'required|unique:siswa,nis',
+            'name'  => 'required|max:255',
+            'gender'  => '',
+        ];
+
         if(empty($this->set_id))
         {
-            $this->validate([
-                'tapel'  => 'required|unique:tapel,tapel',
-            ]);
-            Tapel::create([
-                'tapel' => $this->tapel,
-            ]);
+            $valid = $this->validate($rules);
+            Siswa::create($valid);
         }
         else
         {
-            $this->validate([
-                'tapel'  => 'required|unique:tapel,tapel,'.$this->set_id,
-            ]);
-            $tp = Tapel::find($this->set_id);
-            $tp->update([
-                'tapel' => $this->tapel,
-            ]);
+            $rules['nis'] = 'required|unique:siswa,nis,'.$this->set_id;
+            $valid = $this->validate($rules);
+
+            $siswa = Siswa::find($this->set_id);
+            $siswa->update($valid);
         }
 
         $this->formReset();
-        session()->flash('success','Data saved.');
+        session()->flash('success','Saved.');
         $this->dispatchBrowserEvent('close-modal');
     }
 
     public function edit($id)
     {
-        $tp = Tapel::find($id);
+        $siswa = Siswa::find($id);
         $this->set_id = $id;
-        $this->tapel = $tp->tapel;
+        $this->nis = $siswa->nis;
+        $this->name = $siswa->name;
+        $this->gender = $siswa->gender;
     }
 
     public function delete($id)
@@ -108,7 +115,7 @@ class TapelManager extends Component
 
     public function destroy()
     {
-        Tapel::destroy($this->set_id);
+        Siswa::destroy($this->set_id);
         $this->formReset();
         session()->flash('success','Deleted.');
         $this->dispatchBrowserEvent('close-modal');

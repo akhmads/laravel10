@@ -13,7 +13,6 @@ class UserTable extends Component
     use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
-    protected $listeners = ['reloadTable' => 'render'];
     public $sortColumn = "created_at";
     public $sortOrder = "desc";
     public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
@@ -69,8 +68,7 @@ class UserTable extends Component
 
     public function closeModal()
     {
-        $this->resetErrorBag();
-        $this->resetValidation();
+        $this->formReset();
         $this->dispatchBrowserEvent('close-modal');
     }
 
@@ -82,33 +80,67 @@ class UserTable extends Component
         $this->password = null;
         $this->avatar = null;
         $this->role = null;
+        $this->showAvatar = null;
 
         $this->resetErrorBag();
         $this->resetValidation();
     }
 
-    public function store()
+    public function save()
     {
-        $this->validate([
-            'name'  => 'required|max:100',
-            'email' => 'required|email|unique:users,email',
-            'password' => ['required','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/'],
-            'avatar' => 'required|image|max:2048|mimes:jpg,jpeg,png,webp',
-            'role'  => 'required',
-        ]);
+        if(empty($this->set_id))
+        {
+            $this->validate([
+                'name'  => 'required|max:100',
+                'email' => 'required|email|unique:users,email',
+                'password' => ['required','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/'],
+                'avatar' => 'required|image|max:2048|mimes:jpg,jpeg,png,webp',
+                'role'  => 'required',
+            ]);
 
-        $avatar = $this->avatar->store('/', 'avatar_disk');
+            $avatar = $this->avatar->store('/', 'avatar_disk');
 
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-            'avatar' => $avatar,
-            'role' => $this->role,
-        ]);
+            $user = User::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => Hash::make($this->password),
+                'avatar' => $avatar,
+                'role' => $this->role,
+            ]);
+        }
+        else
+        {
+            $this->validate([
+                'name'  => 'required|max:100',
+                'email' => 'required|email|unique:users,email,'.$this->set_id,
+                'password' => ['nullable','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/'],
+                'avatar' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
+                'role'  => 'required',
+            ]);
+
+
+            $user = User::find($this->set_id);
+
+            $user->update([
+                'name' => $this->name,
+                'email' => $this->email,
+                'role' => $this->role,
+            ]);
+
+            if( !empty($this->password) ){
+                $user->password = Hash::make($this->password);
+                $user->save();
+            }
+
+            if( !empty($this->avatar) ){
+                $avatar = $this->avatar->store('/', 'avatar_disk');
+                $user->avatar = $avatar;
+                $user->save();
+            }
+        }
 
         $this->formReset();
-        session()->flash('success','User saved.');
+        session()->flash('success','Saved.');
         $this->dispatchBrowserEvent('close-modal');
     }
 
@@ -124,41 +156,6 @@ class UserTable extends Component
         }else{
             return redirect()->to('/admin');
         }
-    }
-
-    public function update()
-    {
-        $this->validate([
-            'name'  => 'required|max:100',
-            'email' => 'required|email|unique:users,email,'.$this->set_id,
-            'password' => ['nullable','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/'],
-            'avatar' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
-            'role'  => 'required',
-        ]);
-
-
-        $user = User::find($this->set_id);
-
-        $user->update([
-            'name' => $this->name,
-            'email' => $this->email,
-            'role' => $this->role,
-        ]);
-
-        if( !empty($this->password) ){
-            $user->password = Hash::make($this->password);
-            $user->save();
-        }
-
-        if( !empty($this->avatar) ){
-            $avatar = $this->avatar->store('/', 'avatar_disk');
-            $user->avatar = $avatar;
-            $user->save();
-        }
-
-        $this->formReset();
-        session()->flash('success','User updated.');
-        $this->dispatchBrowserEvent('close-modal');
     }
 
     public function delete($id)

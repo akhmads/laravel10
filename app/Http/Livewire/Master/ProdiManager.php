@@ -122,6 +122,7 @@ class ProdiManager extends Component
     public function destroy()
     {
         Prodi::destroy($this->set_id);
+        $this->formReset();
         session()->flash('success','Deleted.');
         $this->dispatchBrowserEvent('close-modal');
     }

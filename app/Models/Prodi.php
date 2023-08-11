@@ -15,10 +15,6 @@ class Prodi extends Model
     protected $table = 'prodi';
     protected $guarded = ['id'];
 
-    // public function ketua(): HasOne
-    // {
-    //     return $this->hasOne(Guru::class);
-    // }
     public function ketua(): BelongsTo
     {
         return $this->belongsTo(Guru::class,'guru_id');

@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('nis',100)->nullable()->default("");
             $table->string('gender',50)->nullable()->default("");
             $table->timestamps();
+
+            $table->index(['created_at']);
+            $table->unique('nis');
         });
     }
 

@@ -124,6 +124,7 @@ class GuruManager extends Component
     public function destroy()
     {
         Guru::destroy($this->set_id);
+        $this->formReset();
         session()->flash('success','Deleted.');
         $this->dispatchBrowserEvent('close-modal');
     }

@@ -1,12 +1,7 @@
 <div>
-    {{-- @if (session()->has('success'))
-        <div class="px-3">
-            <h5 class="alert alert-success mb-3">{{ session('success') }}</h5>
-        </div>
-    @endif --}}
+    <x-flash-alert />
     <div class="card">
         <div class="card-header d-md-flex align-items-center justify-content-between">
-            {{-- <h5 class="card-title m-0 me-2">User Master</h5> --}}
             <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model="searchKeyword" >
             <div class="btn-group shadow-sm">
                 <button type="button" wire:click="roleFilter('')" class="btn btn-outline-secondary {{ ($roleFilter=='') ? 'active' : '' }}">All</button>
@@ -14,7 +9,7 @@
                 <button type="button" wire:click="roleFilter('{{ $row }}')" class="btn btn-outline-secondary {{ ($roleFilter==$row) ? 'active' : '' }}">{{ ucfirst($row) }}</button>
                 @endforeach
             </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UserCreateModal"><i class="fa fa-plus me-2"></i>Create New</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UserFormModal"><i class="fa fa-plus me-2"></i>Create New</button>
         </div>
         <div class="table-responsive text-nowrap" class="position-relative">
             <div wire:loading class="position-absolute fs-1 top-50 start-50 z-3 text-info">
@@ -40,7 +35,7 @@
                 <td class="border-start">{{ $user->email }}</td>
                 <td class="border-start">{{ $user->role }}</td>
                 <td class="border-start text-center">
-                    <button type="button" wire:click="edit('{{ $user->id }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#UserEditModal">Update</button>
+                    <button type="button" wire:click="edit('{{ $user->id }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#UserFormModal">Update</button>
                     <button type="button" wire:click="delete('{{ $user->id }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#UserDeleteModal">Del</button>
                 </td>
             </tr>

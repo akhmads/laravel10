@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('guru_id')->nullable()->default("");
             $table->timestamps();
+
+            $table->index(['guru_id', 'created_at']);
+            $table->unique('code');
         });
     }
 

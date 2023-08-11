@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('scope')->nullable()->default("");
             $table->integer('ord')->nullable()->default("0");
             $table->timestamps();
-            $table->index(['parent_id']);
+            $table->index(['parent_id','ord']);
         });
     }
 

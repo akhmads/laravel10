@@ -1,88 +1,12 @@
 
-{{-- Create --}}
-<div wire:ignore.self class="modal fade" id="UserCreateModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog {{-- modal-sm --}} modal-dialog-centered" user="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel3">Create User</h5>
-          <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
-        </div>
-        <form wire:submit.prevent="store">
-        <div class="modal-body">
-
-            <div class="mb-3">
-                <label class="form-label">Name</label>
-                <input type="text" wire:model="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
-                @error('name')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" wire:model="email" class="form-control @error('email') is-invalid @enderror" placeholder="user@host.com">
-                @error('email')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" wire:model="password" class="form-control @error('password') is-invalid @enderror">
-                @error('password')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Avatar</label>
-                <input type="file" wire:model="avatar" class="form-control @error('avatar') is-invalid @enderror" />
-                @error('avatar')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Role</label>
-                <select wire:model="role" class="form-select @error('role') is-invalid @enderror">
-                    @foreach(['','admin','guru','siswa','ortu'] as $row)
-                    <option value="{{ $row }}">{{ $row }}</option>
-                    @endforeach
-                </select>
-                @error('role')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-label-secondary" {{--data-bs-dismiss="modal"--}} wire:click="closeModal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-        </form>
-      </div>
-    </div>
-</div>
-
-{{-- Edit --}}
-<div wire:ignore.self class="modal fade" id="UserEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="UserFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" user="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Edit User</h5>
+          <h5 class="modal-title">User</h5>
           <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
         </div>
-        <form wire:submit.prevent="update">
+        <form wire:submit.prevent="save">
         <div class="modal-body">
 
             <div class="mb-3">
@@ -173,8 +97,7 @@
 @push('scripts')
 <script>
     window.addEventListener('close-modal', event => {
-        $('#UserCreateModal').modal('hide');
-        $('#UserEditModal').modal('hide');
+        $('#UserFormModal').modal('hide');
         $('#UserDeleteModal').modal('hide');
     });
 </script>
