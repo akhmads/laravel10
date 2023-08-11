@@ -74,7 +74,6 @@ class Detail extends Component
     public function remove($index)
     {
         unset($this->items[$index]);
-        //$this->items = array_values($this->items);
     }
 
     public function closeModal()

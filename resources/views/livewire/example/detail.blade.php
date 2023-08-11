@@ -19,8 +19,8 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input type="text" class="form-control" wire:model="items.{{ $index }}.name">
-                        <button class="btn btn-outline-primary" wire:click.prevent="setIndex('{{ $index }}')" data-bs-toggle="modal" data-bs-target="#ChooseModal">Browse</button>
+                        <input type="text" class="form-control" wire:model="items.{{ $index }}.name" readonly="">
+                        <button class="btn btn-outline-primary" wire:click.prevent="setIndex('{{ $index }}')" data-bs-toggle="modal" data-bs-target="#ChooseModal"><i class="fa fa-search"></i></button>
                     </div>
                 </td>
                 <td><input type="text" class="form-control" wire:model="items.{{ $index }}.qty"></td>

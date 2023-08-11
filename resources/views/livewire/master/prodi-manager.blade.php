@@ -16,6 +16,7 @@
                 <th class="w-px-75">No</th>
                 <th style="width:20%;" class="sort" wire:click="sortOrder('code')">Kode {!! $sortLink !!}</th>
                 <th class="sort" wire:click="sortOrder('name')">Program Studi {!! $sortLink !!}</th>
+                <th class="sort" wire:click="sortOrder('guru.name')">Ketua Jurusan {!! $sortLink !!}</th>
                 <th class="w-px-150">Action</th>
             </tr>
             </thead>
@@ -25,6 +26,7 @@
                 <td>{{ ($prodis->currentPage()-1) * $prodis->perPage() + $loop->index + 1 }}</td>
                 <td class="border-start">{{ $prodi->code }}</td>
                 <td class="border-start">{{ $prodi->name }}</td>
+                <td class="border-start">{{ $prodi->ketua->name ?? '' }}</td>
                 <td class="border-start text-center">
                     <button type="button" wire:click="edit('{{ $prodi->id }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#ProdiModal">Update</button>
                     <button type="button" wire:click="delete('{{ $prodi->id }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#ProdiDeleteModal">Del</button>
@@ -35,6 +37,7 @@
             @for($i=1; $i<=($prodis->perPage()-$prodis->count()); $i++)
             <tr>
                 <td>&nbsp;</td>
+                <td class="border-start">&nbsp;</td>
                 <td class="border-start">&nbsp;</td>
                 <td class="border-start">&nbsp;</td>
                 <td class="border-start">&nbsp;</td>
@@ -72,6 +75,21 @@
                     <label class="form-label">Prodi</label>
                     <input type="text" wire:model="name" class="form-control @error('name') is-invalid @enderror" placeholder="Prodi">
                     @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    @inject('guru', 'App\Models\Guru')
+                    <label class="form-label">Ketua Jurusan</label>
+                    <select wire:model="guru_id" class="form-select @error('guru_id') is-invalid @enderror">
+                        <option value="">-- Choose --</option>
+                        @foreach($guru::orderBy('name')->get()->pluck('name','id') as $key => $val)
+                        <option value="{{ $key }}" @if($key==$guru_id) selected @endif>{{ $val }}</option>
+                        @endforeach
+                    </select>
+                    @error('guru_id')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

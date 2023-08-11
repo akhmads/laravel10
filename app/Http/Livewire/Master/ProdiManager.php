@@ -20,10 +20,11 @@ class ProdiManager extends Component
 
     public $code;
     public $name;
+    public $guru_id;
 
     public function render()
     {
-        $prodi = Prodi::orderby($this->sortColumn,$this->sortOrder)->select('*');
+        $prodi = Prodi::orderby($this->sortColumn,$this->sortOrder)->with('ketua:id,name');
         if(!empty($this->searchKeyword)){
             $prodi->orWhere('code','like',"%".$this->searchKeyword."%");
             $prodi->orWhere('name','like',"%".$this->searchKeyword."%");
@@ -65,6 +66,7 @@ class ProdiManager extends Component
         $this->set_id = null;
         $this->code = null;
         $this->name = null;
+        $this->guru_id = null;
 
         $this->resetErrorBag();
         $this->resetValidation();
@@ -81,6 +83,7 @@ class ProdiManager extends Component
             Prodi::create([
                 'code' => $this->code,
                 'name' => $this->name,
+                'guru_id' => $this->guru_id,
             ]);
         }
         else
@@ -93,6 +96,7 @@ class ProdiManager extends Component
             $tp->update([
                 'code' => $this->code,
                 'name' => $this->name,
+                'guru_id' => $this->guru_id,
             ]);
         }
 
@@ -107,6 +111,7 @@ class ProdiManager extends Component
         $this->set_id = $id;
         $this->code = $prodi->code;
         $this->name = $prodi->name;
+        $this->guru_id = $prodi->guru_id;
     }
 
     public function delete($id)
