@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tapel', function (Blueprint $table) {
-            $table->id();
-            $table->string('tapel');
+            $table->string('code', 30)->primary();
+            $table->boolean('active')->nullable()->default("0");
             $table->timestamps();
-            $table->unique('tapel');
             $table->index(['created_at']);
         });
     }

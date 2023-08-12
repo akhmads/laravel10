@@ -99,13 +99,13 @@
                 <div class="mb-3">
                     @inject('guru', 'App\Models\Guru')
                     <label class="form-label">Ketua Jurusan</label>
-                    <select wire:model="guru_id" class="form-select @error('guru_id') is-invalid @enderror">
+                    <select wire:model="guru_code" class="form-select @error('guru_code') is-invalid @enderror">
                         <option value="">-- Choose --</option>
-                        @foreach($guru::orderBy('name')->get()->pluck('name','id') as $key => $val)
-                        <option value="{{ $key }}" @if($key==$guru_id) selected @endif>{{ $val }}</option>
+                        @foreach($guru::orderBy('name')->get()->pluck('name','code') as $key => $val)
+                        <option value="{{ $key }}" @if($key==$guru_code) selected @endif>{{ $val }}</option>
                         @endforeach
                     </select>
-                    @error('guru_id')
+                    @error('guru_code')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

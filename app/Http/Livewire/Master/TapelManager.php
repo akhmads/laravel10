@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 use App\Models\Tapel;
 
 class TapelManager extends Component
@@ -18,7 +19,7 @@ class TapelManager extends Component
     public $roleFilter = '';
     public $set_id;
 
-    public $tapel;
+    public $code;
 
     public function render()
     {
@@ -61,7 +62,7 @@ class TapelManager extends Component
     public function formReset()
     {
         $this->set_id = null;
-        $this->tapel = null;
+        $this->code = null;
 
         $this->resetErrorBag();
         $this->resetValidation();
@@ -71,26 +72,22 @@ class TapelManager extends Component
     {
         if(empty($this->set_id))
         {
-            $this->validate([
-                'tapel'  => 'required|unique:tapel,tapel',
+            $valid = $this->validate([
+                'code'  => 'required|max:30|alpha_dash|unique:tapel,code',
             ]);
-            Tapel::create([
-                'tapel' => $this->tapel,
-            ]);
+            Tapel::create($valid);
         }
         else
         {
-            $this->validate([
-                'tapel'  => 'required|unique:tapel,tapel,'.$this->set_id,
+            $valid = $this->validate([
+                'code'  => ['required', Rule::unique('tapel')->ignore($this->set_id, 'code')]
             ]);
             $tp = Tapel::find($this->set_id);
-            $tp->update([
-                'tapel' => $this->tapel,
-            ]);
+            $tp->update($valid);
         }
 
         $this->formReset();
-        session()->flash('success','Data saved.');
+        session()->flash('success','Saved.');
         $this->dispatchBrowserEvent('close-modal');
     }
 
@@ -98,7 +95,7 @@ class TapelManager extends Component
     {
         $tp = Tapel::find($id);
         $this->set_id = $id;
-        $this->tapel = $tp->tapel;
+        $this->code = $tp->code;
     }
 
     public function delete($id)

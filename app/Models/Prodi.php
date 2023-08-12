@@ -13,7 +13,7 @@ class Prodi extends Model
     use HasFactory;
 
     protected $table = 'prodi';
-    protected $guarded = ['id'];
+    protected $guarded = [];
     protected $keyType = 'string';
     protected $primaryKey = 'code';
 
@@ -21,6 +21,6 @@ class Prodi extends Model
 
     public function ketua(): BelongsTo
     {
-        return $this->belongsTo(Guru::class,'guru_id');
+        return $this->belongsTo(Guru::class,'guru_code');
     }
 }

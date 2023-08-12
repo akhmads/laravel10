@@ -1,5 +1,21 @@
 <div>
     @section('title', 'Guru')
+
+    <div class="d-md-flex justify-content-between">
+        <h2 class="mb-3"><span class="text-muted fw-light">Data /</span> Guru</h2>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('/admin') }}">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0);">Master Data</a>
+                </li>
+                <li class="breadcrumb-item active">Guru</li>
+            </ol>
+        </nav>
+    </div>
+
     <x-flash-alert />
     <div class="card">
         <div class="card-header d-md-flex align-items-center justify-content-between">

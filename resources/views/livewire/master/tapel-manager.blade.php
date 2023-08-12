@@ -1,9 +1,24 @@
 <div>
     @section('title', 'Tahun Pelajaran')
+
+    <div class="d-md-flex justify-content-between">
+        <h2 class="mb-3"><span class="text-muted fw-light">Tahun /</span> Pelajaran</h2>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('/admin') }}">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0);">Master Data</a>
+                </li>
+                <li class="breadcrumb-item active">Tahun Pelajaran</li>
+            </ol>
+        </nav>
+    </div>
+
     <x-flash-alert />
     <div class="card">
         <div class="card-header d-md-flex align-items-center justify-content-between">
-            {{-- <h5 class="card-title m-0 me-2">Tapel Master</h5> --}}
             <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model="searchKeyword" >
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TapelModal"><i class="fa fa-plus me-2"></i>Create New</button>
         </div>
@@ -15,7 +30,8 @@
             <thead>
             <tr class="border-top">
                 <th class="w-px-75">No</th>
-                <th class="sort" wire:click="sortOrder('tapel')">Tahun Pelajaran {!! $sortLink !!}</th>
+                <th class="sort" wire:click="sortOrder('code')">Tahun Pelajaran {!! $sortLink !!}</th>
+                <th class="sort" wire:click="sortOrder('active')">Active {!! $sortLink !!}</th>
                 <th class="w-px-150">Action</th>
             </tr>
             </thead>
@@ -23,10 +39,11 @@
             @foreach($tapels as $tapel)
             <tr>
                 <td>{{ ($tapels->currentPage()-1) * $tapels->perPage() + $loop->index + 1 }}</td>
-                <td class="border-start">{{ $tapel->tapel }}</td>
+                <td class="border-start">{{ $tapel->code }}</td>
+                <td class="border-start">{{ $tapel->active }}</td>
                 <td class="border-start text-center">
-                    <button type="button" wire:click="edit('{{ $tapel->id }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#TapelModal">Update</button>
-                    <button type="button" wire:click="delete('{{ $tapel->id }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#TapelDeleteModal">Del</button>
+                    <button type="button" wire:click="edit('{{ $tapel->code }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#TapelModal">Update</button>
+                    <button type="button" wire:click="delete('{{ $tapel->code }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#TapelDeleteModal">Del</button>
                 </td>
             </tr>
             @endforeach
@@ -34,6 +51,7 @@
             @for($i=1; $i<=($tapels->perPage()-$tapels->count()); $i++)
             <tr>
                 <td>&nbsp;</td>
+                <td class="border-start">&nbsp;</td>
                 <td class="border-start">&nbsp;</td>
                 <td class="border-start">&nbsp;</td>
             </tr>
@@ -59,8 +77,8 @@
 
                 <div class="mb-3">
                     <label class="form-label">Tahun Pelajaran</label>
-                    <input type="text" wire:model="tapel" class="form-control @error('tapel') is-invalid @enderror" placeholder="Tahun Pelajaran">
-                    @error('tapel')
+                    <input type="text" wire:model="code" class="form-control @error('code') is-invalid @enderror" placeholder="Tahun Pelajaran" {{ empty($set_id) ? '' : 'readonly' }}>
+                    @error('code')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

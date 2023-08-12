@@ -20,11 +20,11 @@ class ProdiManager extends Component
 
     public $code;
     public $name;
-    public $guru_id;
+    public $guru_code;
 
     public function render()
     {
-        $prodi = Prodi::orderby($this->sortColumn,$this->sortOrder)->with('ketua:id,name');
+        $prodi = Prodi::orderby($this->sortColumn,$this->sortOrder)->with('ketua:code,name');
         if(!empty($this->searchKeyword)){
             $prodi->orWhere('code','like',"%".$this->searchKeyword."%");
             $prodi->orWhere('name','like',"%".$this->searchKeyword."%");
@@ -66,7 +66,7 @@ class ProdiManager extends Component
         $this->set_id = null;
         $this->code = null;
         $this->name = null;
-        $this->guru_id = null;
+        $this->guru_code = null;
 
         $this->resetErrorBag();
         $this->resetValidation();
@@ -79,7 +79,7 @@ class ProdiManager extends Component
             $valid = $this->validate([
                 'code'  => 'required|max:30|alpha_num:ascii|unique:prodi,code',
                 'name'  => 'required|max:255',
-                'guru_id'  => '',
+                'guru_code'  => '',
             ]);
             Prodi::create($valid);
         }
@@ -88,7 +88,7 @@ class ProdiManager extends Component
             $valid = $this->validate([
                 //'code'  => 'required|unique:prodi,code,'.$this->set_id,
                 'name'  => 'required|max:255',
-                'guru_id'  => '',
+                'guru_code'  => '',
             ]);
             $tp = Prodi::find($this->set_id);
             $tp->update($valid);
@@ -105,7 +105,7 @@ class ProdiManager extends Component
         $this->set_id = $id;
         $this->code = $prodi->code;
         $this->name = $prodi->name;
-        $this->guru_id = $prodi->guru_id;
+        $this->guru_code = $prodi->guru_code;
     }
 
     public function delete($id)

@@ -10,7 +10,7 @@ class Guru extends Model
     use HasFactory;
 
     protected $table = 'guru';
-    protected $guarded = ['id'];
+    protected $guarded = [];
     protected $keyType = 'string';
     protected $primaryKey = 'code';
 

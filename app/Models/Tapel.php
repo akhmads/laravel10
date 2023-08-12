@@ -10,5 +10,9 @@ class Tapel extends Model
     use HasFactory;
 
     protected $table = 'tapel';
-    protected $guarded = ['id'];
+    protected $guarded = [];
+    protected $keyType = 'string';
+    protected $primaryKey = 'code';
+
+    public $incrementing = false;
 }
