@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('guru', function (Blueprint $table) {
-            $table->id();
+            $table->string('code', 30)->primary();
             $table->string('name');
-            $table->string('nip',100)->nullable("");
-            $table->string('gender',50)->nullable("");
+            $table->string('gender',50)->nullable()->default("");
             $table->timestamps();
+            $table->index(['created_at']);
         });
     }
 

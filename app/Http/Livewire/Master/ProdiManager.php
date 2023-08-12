@@ -76,28 +76,22 @@ class ProdiManager extends Component
     {
         if(empty($this->set_id))
         {
-            $this->validate([
-                'code'  => 'required|unique:prodi,code',
+            $valid = $this->validate([
+                'code'  => 'required|max:30|alpha_num:ascii|unique:prodi,code',
                 'name'  => 'required|max:255',
+                'guru_id'  => '',
             ]);
-            Prodi::create([
-                'code' => $this->code,
-                'name' => $this->name,
-                'guru_id' => $this->guru_id,
-            ]);
+            Prodi::create($valid);
         }
         else
         {
-            $this->validate([
-                'code'  => 'required|unique:prodi,code,'.$this->set_id,
+            $valid = $this->validate([
+                //'code'  => 'required|unique:prodi,code,'.$this->set_id,
                 'name'  => 'required|max:255',
+                'guru_id'  => '',
             ]);
             $tp = Prodi::find($this->set_id);
-            $tp->update([
-                'code' => $this->code,
-                'name' => $this->name,
-                'guru_id' => $this->guru_id,
-            ]);
+            $tp->update($valid);
         }
 
         $this->formReset();

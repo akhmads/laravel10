@@ -1,5 +1,21 @@
 <div>
     @section('title', 'Program Studi')
+
+    <div class="d-md-flex justify-content-between">
+        <h2 class="mb-3"><span class="text-muted fw-light">Program /</span> Studi</h2>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('/admin') }}">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0);">Master Data</a>
+                </li>
+                <li class="breadcrumb-item active">Program Studi</li>
+            </ol>
+        </nav>
+    </div>
+
     <x-flash-alert />
     <div class="card">
         <div class="card-header d-md-flex align-items-center justify-content-between">
@@ -14,7 +30,7 @@
             <thead>
             <tr class="border-top">
                 <th class="w-px-75">No</th>
-                <th style="width:20%;" class="sort" wire:click="sortOrder('code')">Kode {!! $sortLink !!}</th>
+                <th style="width:20%;" class="sort" wire:click="sortOrder('code')">Code {!! $sortLink !!}</th>
                 <th class="sort" wire:click="sortOrder('name')">Program Studi {!! $sortLink !!}</th>
                 <th class="sort" wire:click="sortOrder('guru.name')">Ketua Jurusan {!! $sortLink !!}</th>
                 <th class="w-px-150">Action</th>
@@ -28,8 +44,8 @@
                 <td class="border-start">{{ $prodi->name }}</td>
                 <td class="border-start">{{ $prodi->ketua->name ?? '' }}</td>
                 <td class="border-start text-center">
-                    <button type="button" wire:click="edit('{{ $prodi->id }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#ProdiModal">Update</button>
-                    <button type="button" wire:click="delete('{{ $prodi->id }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#ProdiDeleteModal">Del</button>
+                    <button type="button" wire:click="edit('{{ $prodi->code }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#ProdiModal">Update</button>
+                    <button type="button" wire:click="delete('{{ $prodi->code }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#ProdiDeleteModal">Del</button>
                 </td>
             </tr>
             @endforeach
@@ -51,7 +67,7 @@
         </div>
     </div>
 
-    {{-- Edit --}}
+    {{-- Form --}}
     <div wire:ignore.self class="modal fade" id="ProdiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" prodi="document">
         <div class="modal-content">
@@ -64,7 +80,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Kode</label>
-                    <input type="text" wire:model="code" class="form-control @error('code') is-invalid @enderror" placeholder="Kode">
+                    <input type="text" wire:model="code" class="form-control @error('code') is-invalid @enderror" placeholder="Kode" {{ empty($set_id) ? '' : 'readonly' }}>
                     @error('code')
                     <div class="invalid-feedback">
                         {{ $message }}

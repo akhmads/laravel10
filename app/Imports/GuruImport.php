@@ -2,12 +2,12 @@
 
 namespace App\Imports;
 
-use App\Models\Siswa;
+use App\Models\Guru;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
-class SiswaImport implements ToModel,WithStartRow,WithBatchInserts
+class GuruImport implements ToModel,WithStartRow,WithBatchInserts
 {
     /**
     * @param array $row
@@ -16,10 +16,10 @@ class SiswaImport implements ToModel,WithStartRow,WithBatchInserts
     */
     public function model(array $row)
     {
-        return new Siswa([
-            'nis'      => $row[0],
-            'name'     => $row[2],
-            'gender'   => $row[6],
+        return new Guru([
+            'code'     => $row[0],
+            'name'     => $row[1],
+            'gender'   => $row[8],
         ]);
     }
 

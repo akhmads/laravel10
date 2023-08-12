@@ -5,15 +5,16 @@ namespace App\Http\Livewire\Master;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use App\Models\Siswa;
-use App\Imports\SiswaImport;
+use App\Models\Matpel;
+use App\Imports\MatpelImport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class SiswaManager extends Component
+class MatpelManager extends Component
 {
     use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
+    public $perPage = 10;
     public $sortColumn = "created_at";
     public $sortOrder = "desc";
     public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
@@ -21,21 +22,20 @@ class SiswaManager extends Component
     public $roleFilter = '';
     public $set_id;
 
+    public $code;
     public $name;
-    public $nis;
-    public $gender;
+    public $ord;
     public $importFile;
 
     public function render()
     {
-        $siswa = Siswa::orderby($this->sortColumn,$this->sortOrder)->select('*');
+        $matpel = Matpel::orderby($this->sortColumn,$this->sortOrder)->select('*');
         if(!empty($this->searchKeyword)){
-            $siswa->orWhere('name','like',"%".$this->searchKeyword."%");
-            $siswa->orWhere('nis','like',"%".$this->searchKeyword."%");
+            $matpel->orWhere('name','like',"%".$this->searchKeyword."%");
         }
-        $siswas = $siswa->paginate(10);
+        $matpels = $matpel->paginate($this->perPage);
 
-        return view('livewire.master.siswa-manager', [ 'siswas' => $siswas ]);
+        return view('livewire.master.matpel-manager', [ 'matpels' => $matpels ]);
     }
 
     public function updated()
@@ -68,9 +68,9 @@ class SiswaManager extends Component
     public function formReset()
     {
         $this->set_id = null;
-        $this->nis = null;
+        $this->code = null;
         $this->name = null;
-        $this->gender = null;
+        $this->ord = 0;
         $this->importFile = null;
 
         $this->resetErrorBag();
@@ -79,24 +79,23 @@ class SiswaManager extends Component
 
     public function store()
     {
-        $rules = [
-            'nis'  => 'required|unique:siswa,nis',
-            'name'  => 'required|max:255',
-            'gender'  => '',
-        ];
-
         if(empty($this->set_id))
         {
-            $valid = $this->validate($rules);
-            Siswa::create($valid);
+            $valid = $this->validate([
+                'code'   => 'required|max:30|alpha_num:ascii|unique:matpel,code',
+                'name' => 'required|max:255',
+                'ord'  => 'required|integer',
+            ]);
+            Matpel::create($valid);
         }
         else
         {
-            $rules['nis'] = 'required|unique:siswa,nis,'.$this->set_id;
-            $valid = $this->validate($rules);
-
-            $siswa = Siswa::find($this->set_id);
-            $siswa->update($valid);
+            $valid = $this->validate([
+                'name' => 'required|max:255',
+                'ord'  => 'required|integer',
+            ]);
+            $matpel = Matpel::find($this->set_id);
+            $matpel->update($valid);
         }
 
         $this->formReset();
@@ -106,11 +105,11 @@ class SiswaManager extends Component
 
     public function edit($id)
     {
-        $siswa = Siswa::find($id);
+        $matpel = Matpel::find($id);
         $this->set_id = $id;
-        $this->nis = $siswa->nis;
-        $this->name = $siswa->name;
-        $this->gender = $siswa->gender;
+        $this->code = $matpel->code;
+        $this->name = $matpel->name;
+        $this->ord = $matpel->ord;
     }
 
     public function delete($id)
@@ -120,7 +119,7 @@ class SiswaManager extends Component
 
     public function destroy()
     {
-        Siswa::destroy($this->set_id);
+        Matpel::destroy($this->set_id);
         $this->formReset();
         session()->flash('success','Deleted.');
         $this->dispatchBrowserEvent('close-modal');
@@ -134,7 +133,7 @@ class SiswaManager extends Component
 
         $file = $this->importFile->store('/', 'local');
         $tmp = storage_path('app').'/'.$file;
-        $excel = Excel::import(new SiswaImport, $tmp);
+        $excel = Excel::import(new MatpelImport, $tmp);
 
         $this->formReset();
         session()->flash('success','Saved.');

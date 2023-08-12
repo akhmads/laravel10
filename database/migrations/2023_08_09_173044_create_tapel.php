@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('tapel');
             $table->timestamps();
             $table->unique('tapel');
+            $table->index(['created_at']);
         });
     }
 

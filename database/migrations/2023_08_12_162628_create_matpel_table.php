@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prodi', function (Blueprint $table) {
+        Schema::create('matpel', function (Blueprint $table) {
             $table->string('code', 30)->primary();
             $table->string('name');
-            $table->string('guru_code')->nullable()->default("");
+            $table->integer('ord');
             $table->timestamps();
-            $table->index(['created_at']);
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prodi');
+        Schema::dropIfExists('matpel');
     }
 };

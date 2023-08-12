@@ -14,6 +14,10 @@ class Prodi extends Model
 
     protected $table = 'prodi';
     protected $guarded = ['id'];
+    protected $keyType = 'string';
+    protected $primaryKey = 'code';
+
+    public $incrementing = false;
 
     public function ketua(): BelongsTo
     {
