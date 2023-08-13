@@ -17,7 +17,7 @@ class SiswaImport implements ToModel,WithStartRow,WithBatchInserts
     public function model(array $row)
     {
         return new Siswa([
-            'nis'      => $row[0],
+            'code'     => $row[0],
             'name'     => $row[2],
             'gender'   => $row[6],
         ]);

@@ -52,11 +52,11 @@
                 <div wire:loading class="position-absolute fs-1 top-50 start-50 z-3 text-info">
                     <i class="fa fa-spin fa-spinner"></i>
                 </div>
-                <table class="table card-table table-hover table-striped table-sm">
+                <table class="table card-table table-hover table-striped table-sm table-bordered">
                 <thead>
                 <tr class="border-top">
                     <th class="w-px-75">No</th>
-                    <th class="sort" wire:click="sortOrder('name')">Name {!! $sortLink !!}</th>
+                    <th style="width:40%;" class="sort" wire:click="sortOrder('name')">Name {!! $sortLink !!}</th>
                     <th class="sort" wire:click="sortOrder('email')">Email {!! $sortLink !!}</th>
                     <th class="w-px-150">#</th>
                 </tr>
@@ -68,13 +68,23 @@
                     <td>{{ ($users->currentPage()-1) * $users->perPage() + $loop->index + 1 }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td><button class="btn btn-sm btn-outline-danger" wire:click.prevent="choose('{{ $user->id }}')"><i class="fa fa-plus me-2"></i> Select</button></td>
+                    <td><button class="btn btn-xs btn-outline-danger w-100" wire:click.prevent="choose('{{ $user->id }}')"><i class="fa fa-plus me-2"></i> Select</button></td>
                 </tr>
                 @empty
                 <tr>
                     <td class="text-center py-2" colspan="3">No items</td>
                 </tr>
                 @endforelse
+
+                @for($i=1; $i<=($users->perPage()-$users->count()); $i++)
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                @endfor
+
                 </tbody>
                 </table>
                 <div class="mt-3">

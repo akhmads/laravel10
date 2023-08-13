@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Master;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 use App\Models\Siswa;
 use App\Imports\SiswaImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -14,6 +15,7 @@ class SiswaManager extends Component
     use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
+    public $perPage = 10;
     public $sortColumn = "created_at";
     public $sortOrder = "desc";
     public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
@@ -22,7 +24,7 @@ class SiswaManager extends Component
     public $set_id;
 
     public $name;
-    public $nis;
+    public $code;
     public $gender;
     public $importFile;
 
@@ -31,9 +33,9 @@ class SiswaManager extends Component
         $siswa = Siswa::orderby($this->sortColumn,$this->sortOrder)->select('*');
         if(!empty($this->searchKeyword)){
             $siswa->orWhere('name','like',"%".$this->searchKeyword."%");
-            $siswa->orWhere('nis','like',"%".$this->searchKeyword."%");
+            $siswa->orWhere('code','like',"%".$this->searchKeyword."%");
         }
-        $siswas = $siswa->paginate(10);
+        $siswas = $siswa->paginate($this->perPage);
 
         return view('livewire.master.siswa-manager', [ 'siswas' => $siswas ]);
     }
@@ -68,7 +70,7 @@ class SiswaManager extends Component
     public function formReset()
     {
         $this->set_id = null;
-        $this->nis = null;
+        $this->code = null;
         $this->name = null;
         $this->gender = null;
         $this->importFile = null;
@@ -80,7 +82,7 @@ class SiswaManager extends Component
     public function store()
     {
         $rules = [
-            'nis'  => 'required|unique:siswa,nis',
+            'code'  => 'required|unique:siswa,code',
             'name'  => 'required|max:255',
             'gender'  => '',
         ];
@@ -92,7 +94,7 @@ class SiswaManager extends Component
         }
         else
         {
-            $rules['nis'] = 'required|unique:siswa,nis,'.$this->set_id;
+            $rules['code'] = ['required', Rule::unique('siswa')->ignore($this->set_id, 'code')];
             $valid = $this->validate($rules);
 
             $siswa = Siswa::find($this->set_id);
@@ -108,7 +110,7 @@ class SiswaManager extends Component
     {
         $siswa = Siswa::find($id);
         $this->set_id = $id;
-        $this->nis = $siswa->nis;
+        $this->code = $siswa->code;
         $this->name = $siswa->name;
         $this->gender = $siswa->gender;
     }

@@ -1,9 +1,32 @@
 <div>
     @section('title', 'Siswa')
+
+    <div class="d-md-flex justify-content-between">
+        <h2 class="mb-3"><span class="text-muted fw-light">Data /</span> Siswa</h2>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('/admin') }}">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0);">Master Data</a>
+                </li>
+                <li class="breadcrumb-item active">Siswa</li>
+            </ol>
+        </nav>
+    </div>
+
     <x-flash-alert />
     <div class="card">
         <div class="card-header d-md-flex align-items-center justify-content-between">
-            <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model.debounce.500ms="searchKeyword" >
+            <div class="d-md-flex justify-content-start">
+                <select class="form-select shadow-sm me-2 w-px-75" wire:model="perPage">
+                    @foreach([10,25,50,100] as $val)
+                    <option value="{{ $val }}" @if($val==$perPage) selected @endif>{{ $val }}</option>
+                    @endforeach
+                </select>
+                <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model="searchKeyword">
+            </div>
             <div class="d-md-flex justify-content-end">
                 <button type="button" class="btn btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#SiswaImportModal"><i class="fa-solid fa-file-excel me-2"></i>Import</button>
                 <button type="button" class="btn btn-outline-info me-2"><i class="fa-solid fa-file-excel me-2"></i>Export</button>
@@ -19,7 +42,7 @@
             <tr class="border-top">
                 <th class="w-px-75">No</th>
                 <th class="sort" wire:click="sortOrder('name')">Nama {!! $sortLink !!}</th>
-                <th style="width:20%;" class="sort" wire:click="sortOrder('nis')">NIS {!! $sortLink !!}</th>
+                <th style="width:20%;" class="sort" wire:click="sortOrder('code')">NIS {!! $sortLink !!}</th>
                 <th style="width:5%;" class="sort" wire:click="sortOrder('gender')">Gender {!! $sortLink !!}</th>
                 <th class="w-px-150">Action</th>
             </tr>
@@ -29,11 +52,11 @@
             <tr>
                 <td>{{ ($siswas->currentPage()-1) * $siswas->perPage() + $loop->index + 1 }}</td>
                 <td class="border-start">{{ $siswa->name }}</td>
-                <td class="border-start">{{ $siswa->nis }}</td>
+                <td class="border-start">{{ $siswa->code }}</td>
                 <td class="border-start">{{ $siswa->gender }}</td>
                 <td class="border-start text-center">
-                    <button type="button" wire:click="edit('{{ $siswa->id }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#SiswaFormModal">Update</button>
-                    <button type="button" wire:click="delete('{{ $siswa->id }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#SiswaDeleteModal">Del</button>
+                    <button type="button" wire:click="edit('{{ $siswa->code }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#SiswaFormModal">Update</button>
+                    <button type="button" wire:click="delete('{{ $siswa->code }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#SiswaDeleteModal">Del</button>
                 </td>
             </tr>
             @endforeach
@@ -76,9 +99,9 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">NIS</label>
-                    <input type="text" wire:model="nis" class="form-control @error('nis') is-invalid @enderror" placeholder="NIS">
-                    @error('nis')
+                    <label class="form-label">CODE</label>
+                    <input type="text" wire:model="code" class="form-control @error('code') is-invalid @enderror" placeholder="CODE" {{ empty($set_id) ? '' : 'readonly' }}>
+                    @error('code')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

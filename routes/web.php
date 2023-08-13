@@ -7,7 +7,6 @@ use App\Http\Controllers\LivewireController;
 use App\Http\Controllers\MenuApiController;
 use App\Http\Controllers\Auth\LoginController;
 
-use App\Http\Controllers\TahunPelajaranController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\MenuManager\MenuManager;
 use App\Http\Livewire\Master\TapelManager;
@@ -40,8 +39,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/', [HomeController::class,'index'])->name('home.index');
     Route::get('/livewire', [LivewireController::class,'index'])->name('livewire.index');
-    Route::get('/admin', [HomeController::class,'index'])->name('admin.index');
     Route::prefix('/admin')->group(function(){
+        Route::get('/', [HomeController::class,'index'])->name('admin.index');
         // system
         Route::get('/user', [UserController::class,'index'])->name('system.user');
         Route::get('/menu-manager', MenuManager::class)->name('system.menu-manager');

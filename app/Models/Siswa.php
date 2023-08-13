@@ -10,5 +10,9 @@ class Siswa extends Model
     use HasFactory;
 
     protected $table = 'siswa';
-    protected $guarded = ['id'];
+    protected $guarded = [];
+    protected $keyType = 'string';
+    protected $primaryKey = 'code';
+
+    public $incrementing = false;
 }

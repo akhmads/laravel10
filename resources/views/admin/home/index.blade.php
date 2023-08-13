@@ -10,7 +10,9 @@
   <h1>Home</h1>
 
   <div class="row">
-
+    <div class="col-md-6">
+        @livewire('auth.mini-profile')
+    </div>
     {{-- <div class="col-md-4">
       @livewire('auth.change-profile')
     </div>
