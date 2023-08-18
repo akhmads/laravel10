@@ -19,7 +19,7 @@ class JadwalImport implements ToModel,WithStartRow,WithBatchInserts
         return new Jadwal([
             'tapel_code' => $row[0],
             'kelas_code' => $row[2],
-            'mapel_code' => $row[3],
+            'matpel_code' => $row[3],
             'guru_code' => $row[5],
             'ruangan_code' => $row[7],
             'hari' => $row[9],

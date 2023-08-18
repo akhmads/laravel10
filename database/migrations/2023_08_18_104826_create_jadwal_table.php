@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('tapel_code', 30)->index();
             $table->string('kelas_code', 30)->index();
-            $table->string('mapel_code', 30)->index();
+            $table->string('matpel_code', 30)->index();
             $table->string('guru_code', 30)->index();
             $table->string('ruangan_code', 30)->index();
             $table->tinyinteger('hari')->index();
+            $table->tinyinteger('jam_awal')->index();
+            $table->tinyinteger('jam_akhir')->index();
             $table->timestamps();
         });
     }

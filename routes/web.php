@@ -17,6 +17,7 @@ use App\Http\Livewire\Master\MatpelManager;
 use App\Http\Livewire\Master\JabatanManager;
 use App\Http\Livewire\Master\RuanganManager;
 use App\Http\Livewire\Master\KelasManager;
+use App\Http\Livewire\Master\JadwalManager;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/jabatan', JabatanManager::class)->name('master.jabatan');
         Route::get('/ruangan', RuanganManager::class)->name('master.ruangan');
         Route::get('/kelas', KelasManager::class)->name('master.kelas');
+        Route::get('/jadwal-pelajaran', JadwalManager::class)->name('master.jadwal-pelajaran');
     });
 
     Route::post('/menu-save-order',[MenuApiController::class,'save_order']);

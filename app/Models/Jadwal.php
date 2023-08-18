@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Tapel;
-use App\Models\Kelas;
-use App\Models\Mapel;
+use App\Models\Jadwal;
+use App\Models\Matpel;
 use App\Models\Guru;
 use App\Models\Ruangan;
 
-class Kelas extends Model
+class Jadwal extends Model
 {
     use HasFactory;
 
@@ -25,12 +25,12 @@ class Kelas extends Model
 
     public function kelas(): BelongsTo
     {
-        return $this->belongsTo(Kelas::class,'kelas_code','code');
+        return $this->belongsTo(Jadwal::class,'kelas_code','code');
     }
 
-    public function mapel(): BelongsTo
+    public function matpel(): BelongsTo
     {
-        return $this->belongsTo(Mapel::class,'mapel_code','code');
+        return $this->belongsTo(Matpel::class,'matpel_code','code');
     }
 
     public function guru(): BelongsTo

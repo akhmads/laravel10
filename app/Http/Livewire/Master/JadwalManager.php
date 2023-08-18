@@ -25,7 +25,7 @@ class JadwalManager extends Component
 
     public $tapel_code;
     public $kelas_code;
-    public $mapel_code;
+    public $matpel_code;
     public $guru_code;
     public $ruangan_code;
     public $hari;
@@ -37,14 +37,17 @@ class JadwalManager extends Component
     {
         $jadwal = Jadwal::select('jadwal.*')
         ->orderby($this->sortColumn,$this->sortOrder)
-        ->join('mapel', 'mapel.code', '=', 'jadwal.mapel_code')
+        ->join('matpel', 'matpel.code', '=', 'jadwal.matpel_code')
         ->join('guru', 'guru.code', '=', 'jadwal.guru_code')
-        ->with('mapel:code,name')
+        ->join('ruangan', 'ruangan.code', '=', 'jadwal.ruangan_code')
+        ->with('matpel:code,name')
+        ->with('ruangan:code,name')
         ->with('guru:code,name');
 
         if(!empty($this->searchKeyword)){
-            $jadwal->orWhere('mapel.name','like',"%".$this->searchKeyword."%");
+            $jadwal->orWhere('matpel.name','like',"%".$this->searchKeyword."%");
             $jadwal->orWhere('guru.name','like',"%".$this->searchKeyword."%");
+            $jadwal->orWhere('ruangan.name','like',"%".$this->searchKeyword."%");
         }
         $jadwals = $jadwal->paginate($this->perPage);
 
@@ -78,7 +81,7 @@ class JadwalManager extends Component
         $this->set_id = null;
         $this->tapel_code = null;
         $this->kelas_code = null;
-        $this->mapel_code = null;
+        $this->matpel_code = null;
         $this->guru_code = null;
         $this->ruangan_code = null;
         $this->hari = null;
@@ -144,7 +147,7 @@ class JadwalManager extends Component
         $this->set_id = $id;
         $this->tapel_code = $jadwal->tapel_code;
         $this->kelas_code = $jadwal->kelas_code;
-        $this->mapel_code = $jadwal->mapel_code;
+        $this->matpel_code = $jadwal->matpel_code;
         $this->guru_code = $jadwal->guru_code;
         $this->ruangan_code = $jadwal->ruangan_code;
         $this->hari = $jadwal->hari;
