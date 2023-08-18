@@ -1,8 +1,8 @@
 <div>
-    @section('title', 'Guru')
+    @section('title', 'Ruangan')
 
     <div class="d-md-flex justify-content-between">
-        <h2 class="mb-3"><span class="text-muted fw-light">Data /</span> Guru</h2>
+        <h2 class="mb-3"><span class="text-muted fw-light">Data /</span> Ruangan</h2>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -11,7 +11,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:void(0);">Master Data</a>
                 </li>
-                <li class="breadcrumb-item active">Guru</li>
+                <li class="breadcrumb-item active">Ruangan</li>
             </ol>
         </nav>
     </div>
@@ -28,9 +28,9 @@
                 <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model.debounce.500ms="searchKeyword">
             </div>
             <div class="d-md-flex justify-content-end">
-                <button type="button" class="btn btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#GuruImportModal"><i class="fa-solid fa-file-excel me-2"></i>Import</button>
+                <button type="button" class="btn btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#RuanganImportModal"><i class="fa-solid fa-file-excel me-2"></i>Import</button>
                 <button type="button" class="btn btn-outline-info me-2"><i class="fa-solid fa-file-excel me-2"></i>Export</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#GuruModal"><i class="fa fa-plus me-2"></i>Create New</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RuanganModal"><i class="fa fa-plus me-2"></i>Create New</button>
             </div>
         </div>
         <div class="table-responsive text-nowrap" class="position-relative">
@@ -41,27 +41,27 @@
             <thead>
             <tr class="border-top">
                 <th class="w-px-75">No</th>
-                <th style="width:20%;" class="sort" wire:click="sortOrder('code')">NIK {!! $sortLink !!}</th>
+                <th style="width:20%;" class="sort" wire:click="sortOrder('code')">Code {!! $sortLink !!}</th>
                 <th class="sort" wire:click="sortOrder('name')">Nama {!! $sortLink !!}</th>
-                <th style="width:5%;" class="sort" wire:click="sortOrder('gender')">Gender {!! $sortLink !!}</th>
+                <th style="width:15%;" class="sort" wire:click="sortOrder('kapasitas')">Kapasitas {!! $sortLink !!}</th>
                 <th class="w-px-150">Action</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($gurus as $guru)
+            @foreach($ruangans as $ruangan)
             <tr>
-                <td>{{ ($gurus->currentPage()-1) * $gurus->perPage() + $loop->index + 1 }}</td>
-                <td class="border-start">{{ $guru->code }}</td>
-                <td class="border-start">{{ $guru->name }}</td>
-                <td class="border-start">{{ $guru->gender }}</td>
+                <td>{{ ($ruangans->currentPage()-1) * $ruangans->perPage() + $loop->index + 1 }}</td>
+                <td class="border-start">{{ $ruangan->code }}</td>
+                <td class="border-start">{{ $ruangan->name }}</td>
+                <td class="border-start">{{ $ruangan->kapasitas }}</td>
                 <td class="border-start text-center">
-                    <button type="button" wire:click="edit('{{ $guru->code }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#GuruModal">Update</button>
-                    <button type="button" wire:click="delete('{{ $guru->code }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#GuruDeleteModal">Del</button>
+                    <button type="button" wire:click="edit('{{ $ruangan->code }}')" class="btn btn-xs btn-info me-2" data-bs-toggle="modal" data-bs-target="#RuanganModal">Update</button>
+                    <button type="button" wire:click="delete('{{ $ruangan->code }}')" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#RuanganDeleteModal">Del</button>
                 </td>
             </tr>
             @endforeach
 
-            @for($i=1; $i<=($gurus->perPage()-$gurus->count()); $i++)
+            @for($i=1; $i<=($ruangans->perPage()-$ruangans->count()); $i++)
             <tr>
                 <td>&nbsp;</td>
                 <td class="border-start">&nbsp;</td>
@@ -73,22 +73,31 @@
             </tbody>
             </table>
             <div class="mt-3">
-                {{ $gurus->links('admin.custom-pagination') }}
+                {{ $ruangans->links('admin.custom-pagination') }}
             </div>
         </div>
     </div>
 
     {{-- Edit --}}
-    <div wire:ignore.self class="modal fade" id="GuruModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" guru="document">
+    <div wire:ignore.self class="modal fade" id="RuanganModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" ruangan="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title">Guru</h5>
+            <h5 class="modal-title">Ruangan</h5>
             <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
             </div>
             <form wire:submit.prevent="store">
             <div class="modal-body">
 
+                <div class="mb-3">
+                    <label class="form-label">Code</label>
+                    <input type="text" wire:model="code" class="form-control @error('code') is-invalid @enderror" placeholder="Code" {{ empty($set_id) ? '' : 'readonly' }}>
+                    @error('code')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" wire:model="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
@@ -99,23 +108,9 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">NIK</label>
-                    <input type="text" wire:model="code" class="form-control @error('code') is-invalid @enderror" placeholder="NIK" {{ empty($set_id) ? '' : 'readonly' }}>
-                    @error('code')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Gender</label>
-                    <select wire:model="gender" class="form-control @error('gender') is-invalid @enderror">
-                        <option value="0">-- Choose --</option>
-                        @foreach( ['L','P'] as $gender )
-                        <option value="{{ $gender }}">{{ $gender }}</option>
-                        @endforeach
-                    </select>
-                    @error('gender')
+                    <label class="form-label">Kapasitas</label>
+                    <input type="number" wire:model="kapasitas" class="form-control @error('kapasitas') is-invalid @enderror" placeholder="Kapasitas">
+                    @error('kapasitas')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -133,17 +128,17 @@
     </div>
 
      {{-- Import --}}
-     <div wire:ignore.self class="modal fade" id="GuruImportModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+     <div wire:ignore.self class="modal fade" id="RuanganImportModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title">Import Guru</h5>
+            <h5 class="modal-title">Import Ruangan</h5>
             <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
             </div>
             <form wire:submit.prevent="import">
             <div class="modal-body">
 
-                <div wire:loading wire:target="import">
+                <div wire:loading wire:target="import" class="mb-3">
                     <i class="fa fa-spin fa-spinner me-3"></i> Importing...
                 </div>
                 <div class="mb-3">
@@ -167,8 +162,8 @@
     </div>
 
     {{-- Delete --}}
-    <div wire:ignore.self class="modal fade" id="GuruDeleteModal" tabindex="-1" guru="dialog">
-        <div class="modal-dialog" guru="document">
+    <div wire:ignore.self class="modal fade" id="RuanganDeleteModal" tabindex="-1" ruangan="dialog">
+        <div class="modal-dialog" ruangan="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Delete Confirm</h5>
@@ -187,9 +182,9 @@
     @push('scripts')
     <script>
         window.addEventListener('close-modal', event => {
-            $('#GuruModal').modal('hide');
-            $('#GuruImportModal').modal('hide');
-            $('#GuruDeleteModal').modal('hide');
+            $('#RuanganModal').modal('hide');
+            $('#RuanganImportModal').modal('hide');
+            $('#RuanganDeleteModal').modal('hide');
         });
     </script>
     @endpush

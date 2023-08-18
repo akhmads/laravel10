@@ -19,7 +19,7 @@
     <x-flash-alert />
     <div class="card">
         <div class="card-header d-md-flex align-items-center justify-content-between">
-            <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model="searchKeyword" >
+            <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model.debounce.500ms="searchKeyword" >
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProdiModal"><i class="fa fa-plus me-2"></i>Create New</button>
         </div>
         <div class="table-responsive text-nowrap" class="position-relative">

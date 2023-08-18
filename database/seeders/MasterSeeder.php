@@ -16,7 +16,11 @@ class MasterSeeder extends Seeder
     public function run(): void
     {
         Tapel::create([
-            'code' => '2022-2023',
+            'code' => '2022-2023 Ganjil',
+        ]);
+
+        Tapel::create([
+            'code' => '2022-2023 Genap',
         ]);
 
         Prodi::create([

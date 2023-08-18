@@ -4,14 +4,14 @@ namespace App\Http\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Validation\Rule;
-use App\Models\Tapel;
+use App\Models\Jabatan;
 
-class TapelManager extends Component
+class JabatanManager extends Component
 {
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+    public $perPage = 10;
     public $sortColumn = "created_at";
     public $sortOrder = "desc";
     public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
@@ -19,22 +19,17 @@ class TapelManager extends Component
     public $roleFilter = '';
     public $set_id;
 
-    public $code;
+    public $name;
 
     public function render()
     {
-        $tapel = Tapel::orderby($this->sortColumn,$this->sortOrder)->select('*');
+        $jabatan = Jabatan::orderby($this->sortColumn,$this->sortOrder)->select('*');
         if(!empty($this->searchKeyword)){
-            $tapel->orWhere('code','like',"%".$this->searchKeyword."%");
+            $jabatan->orWhere('name','like',"%".$this->searchKeyword."%");
         }
-        $tapels = $tapel->paginate(10);
+        $jabatans = $jabatan->paginate($this->perPage);
 
-        return view('livewire.master.tapel-manager', [ 'tapels' => $tapels ]);
-    }
-
-    public function updated()
-    {
-        $this->resetPage();
+        return view('livewire.master.jabatan-manager', [ 'jabatans' => $jabatans ]);
     }
 
     public function sortOrder($columnName="")
@@ -62,7 +57,7 @@ class TapelManager extends Component
     public function formReset()
     {
         $this->set_id = null;
-        $this->code = null;
+        $this->name = null;
 
         $this->resetErrorBag();
         $this->resetValidation();
@@ -73,17 +68,17 @@ class TapelManager extends Component
         if(empty($this->set_id))
         {
             $valid = $this->validate([
-                'code'  => 'required|max:30|alpha_dash|unique:tapel,code',
+                'name' => 'required|max:255',
             ]);
-            Tapel::create($valid);
+            Jabatan::create($valid);
         }
         else
         {
             $valid = $this->validate([
-                'code'  => ['required', Rule::unique('tapel')->ignore($this->set_id, 'code')]
+                'name' => 'required|max:255',
             ]);
-            $tp = Tapel::find($this->set_id);
-            $tp->update($valid);
+            $jabatan = Jabatan::find($this->set_id);
+            $jabatan->update($valid);
         }
 
         $this->formReset();
@@ -93,9 +88,9 @@ class TapelManager extends Component
 
     public function edit($id)
     {
-        $tp = Tapel::find($id);
+        $jabatan = Jabatan::find($id);
         $this->set_id = $id;
-        $this->code = $tp->code;
+        $this->name = $jabatan->name;
     }
 
     public function delete($id)
@@ -105,7 +100,7 @@ class TapelManager extends Component
 
     public function destroy()
     {
-        Tapel::destroy($this->set_id);
+        Jabatan::destroy($this->set_id);
         $this->formReset();
         session()->flash('success','Deleted.');
         $this->dispatchBrowserEvent('close-modal');

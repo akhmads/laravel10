@@ -49,6 +49,17 @@ class MenuSeeder extends Seeder
             'url' => 'admin/mata-pelajaran',
         ]);
         Menu::create([
+            'title' => 'Jabatan',
+            'parent_id' => '1',
+            'url' => 'admin/jabatan',
+        ]);
+        Menu::create([
+            'title' => 'Ruangan',
+            'parent_id' => '1',
+            'url' => 'admin/ruangan',
+        ]);
+
+        Menu::create([
             'title' => 'Home',
             'parent_id' => '0',
             'url' => '/',

@@ -25,7 +25,7 @@
                     <option value="{{ $val }}" @if($val==$perPage) selected @endif>{{ $val }}</option>
                     @endforeach
                 </select>
-                <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model="searchKeyword">
+                <input type="text" class="form-control shadow-sm" placeholder="Search" style="width: 250px;" wire:model.debounce.500ms="searchKeyword">
             </div>
             <div class="d-md-flex justify-content-end">
                 <button type="button" class="btn btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#MatpelImportModal"><i class="fa-solid fa-file-excel me-2"></i>Import</button>

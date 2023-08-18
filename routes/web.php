@@ -14,6 +14,8 @@ use App\Http\Livewire\Master\ProdiManager;
 use App\Http\Livewire\Master\GuruManager;
 use App\Http\Livewire\Master\SiswaManager;
 use App\Http\Livewire\Master\MatpelManager;
+use App\Http\Livewire\Master\JabatanManager;
+use App\Http\Livewire\Master\RuanganManager;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/guru', GuruManager::class)->name('master.guru');
         Route::get('/siswa', SiswaManager::class)->name('master.siswa');
         Route::get('/mata-pelajaran', MatpelManager::class)->name('master.mata-pelajaran');
+        Route::get('/jabatan', JabatanManager::class)->name('master.jabatan');
+        Route::get('/ruangan', RuanganManager::class)->name('master.ruangan');
     });
 
     Route::post('/menu-save-order',[MenuApiController::class,'save_order']);
