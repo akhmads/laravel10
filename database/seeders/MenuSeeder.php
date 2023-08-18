@@ -24,6 +24,32 @@ class MenuSeeder extends Seeder
             'ord' => '3',
         ]);
         Menu::create([
+            'id' => '2',
+            'title' => 'Jadwal Pelajaran',
+            'parent_id' => '0',
+            'url' => '/admin/jadwal-pelajaran',
+            'scope' => 'jadwal*',
+            'icon' => 'fa fa-calendar',
+            'ord' => '4',
+        ]);
+        Menu::create([
+            'title' => 'Home',
+            'parent_id' => '0',
+            'url' => '/',
+            'scope' => '',
+            'icon' => 'fa fa-home',
+            'ord' => '1',
+        ]);
+        Menu::create([
+            'title' => 'Component',
+            'parent_id' => '0',
+            'url' => 'livewire',
+            'scope' => 'livewire.index',
+            'icon' => 'fa fa-cube',
+            'ord' => '2',
+        ]);
+
+        Menu::create([
             'title' => 'Siswa',
             'parent_id' => '1',
             'url' => 'admin/siswa',
@@ -58,22 +84,10 @@ class MenuSeeder extends Seeder
             'parent_id' => '1',
             'url' => 'admin/ruangan',
         ]);
-
         Menu::create([
-            'title' => 'Home',
-            'parent_id' => '0',
-            'url' => '/',
-            'scope' => '',
-            'icon' => 'fa fa-home',
-            'ord' => '1',
-        ]);
-        Menu::create([
-            'title' => 'Component',
-            'parent_id' => '0',
-            'url' => 'livewire',
-            'scope' => 'livewire.index',
-            'icon' => 'fa fa-cube',
-            'ord' => '2',
+            'title' => 'Kelas',
+            'parent_id' => '1',
+            'url' => 'admin/kelas',
         ]);
     }
 }
