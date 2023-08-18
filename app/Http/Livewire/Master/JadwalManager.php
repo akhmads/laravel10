@@ -41,8 +41,8 @@ class JadwalManager extends Component
         ->join('guru', 'guru.code', '=', 'jadwal.guru_code')
         ->join('ruangan', 'ruangan.code', '=', 'jadwal.ruangan_code')
         ->with('matpel:code,name')
-        ->with('ruangan:code,name')
-        ->with('guru:code,name');
+        ->with('guru:code,name')
+        ->with('ruangan:code,name');
 
         if(!empty($this->searchKeyword)){
             $jadwal->orWhere('matpel.name','like',"%".$this->searchKeyword."%");

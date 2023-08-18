@@ -27,7 +27,7 @@ class MenuSeeder extends Seeder
             'id' => '2',
             'title' => 'Jadwal Pelajaran',
             'parent_id' => '0',
-            'url' => '/admin/jadwal-pelajaran',
+            'url' => 'admin/jadwal-pelajaran',
             'scope' => 'jadwal*',
             'icon' => 'fa fa-calendar',
             'ord' => '4',
