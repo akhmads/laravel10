@@ -33,6 +33,16 @@ class MenuSeeder extends Seeder
             'ord' => '4',
         ]);
         Menu::create([
+            'id' => '3',
+            'title' => 'Rombongan Belajar',
+            'parent_id' => '0',
+            'url' => 'admin/rombongan-belajar',
+            'scope' => 'rombongan-belajar*',
+            'icon' => 'fa fa-users',
+            'ord' => '5',
+        ]);
+
+        Menu::create([
             'title' => 'Home',
             'parent_id' => '0',
             'url' => '/',

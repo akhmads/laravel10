@@ -42,7 +42,7 @@
             <tr class="border-top">
                 <th class="w-px-75">No</th>
                 <th style="width:14%;" class="sort" wire:click="sortOrder('tapel_code')">Tahun {!! $sortLink !!}</th>
-                <th style="width:12%;" class="sort" wire:click="sortOrder('kelas.code')">Jadwal {!! $sortLink !!}</th>
+                <th style="width:12%;" class="sort" wire:click="sortOrder('kelas_code')">Kelas {!! $sortLink !!}</th>
                 <th class="sort" wire:click="sortOrder('matpel.name')">Mata Pelajaran {!! $sortLink !!}</th>
                 <th class="sort" wire:click="sortOrder('guru.name')">Guru {!! $sortLink !!}</th>
                 <th class="sort" wire:click="sortOrder('ruangan.name')">Ruangan {!! $sortLink !!}</th>
@@ -117,22 +117,102 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Code</label>
-                    <input type="text" wire:model="code" class="form-control @error('code') is-invalid @enderror" placeholder="Code" {{ empty($set_id) ? '' : 'readonly' }}>
-                    @error('code')
+                    @inject('kelas', 'App\Models\Kelas')
+                    <label class="form-label">Kelas</label>
+                    <select wire:model="kelas_code" class="form-select @error('kelas_code') is-invalid @enderror">
+                        <option value="">-- Choose --</option>
+                        @foreach($kelas::where('tapel_code',$tapel_code)->orderBy('name')->get()->pluck('name','code') as $key => $val)
+                        <option value="{{ $key }}" @if($key==$kelas_code) selected @endif>{{ $key.' - '.$val }}</option>
+                        @endforeach
+                    </select>
+                    @error('kelas_code')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Name</label>
-                    <input type="text" wire:model="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
-                    @error('name')
+                    @inject('matpel', 'App\Models\Matpel')
+                    <label class="form-label">Mata Pelajaran</label>
+                    <select wire:model="matpel_code" class="form-select @error('matpel_code') is-invalid @enderror">
+                        <option value="">-- Choose --</option>
+                        @foreach($matpel::orderBy('name')->get()->pluck('name','code') as $key => $val)
+                        <option value="{{ $key }}" @if($key==$matpel_code) selected @endif>{{ $val.' - '.$key }}</option>
+                        @endforeach
+                    </select>
+                    @error('matpel_code')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
+                </div>
+                <div class="mb-3">
+                    @inject('guru', 'App\Models\Guru')
+                    <label class="form-label">Guru</label>
+                    <select wire:model="guru_code" class="form-select @error('guru_code') is-invalid @enderror">
+                        <option value="">-- Choose --</option>
+                        @foreach($guru::orderBy('name')->get()->pluck('name','code') as $key => $val)
+                        <option value="{{ $key }}" @if($key==$guru_code) selected @endif>{{ $val }}</option>
+                        @endforeach
+                    </select>
+                    @error('guru_code')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    @inject('ruangan', 'App\Models\Ruangan')
+                    <label class="form-label">Ruangan</label>
+                    <select wire:model="ruangan_code" class="form-select @error('ruangan_code') is-invalid @enderror">
+                        <option value="">-- Choose --</option>
+                        @foreach($ruangan::orderBy('name')->get()->pluck('name','code') as $key => $val)
+                        <option value="{{ $key }}" @if($key==$ruangan_code) selected @endif>{{ $val }}</option>
+                        @endforeach
+                    </select>
+                    @error('ruangan_code')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Hari</label>
+                    <select wire:model="hari" class="form-control @error('hari') is-invalid @enderror">
+                        <option value="0">-- Choose --</option>
+                        @foreach( ['1'=>'Senin','2'=>'Selasa','3'=>'Rabu','4'=>'Kamis','5'=>'Jumat','6'=>'Sabtu','7'=>'Minggu'] as $key => $val )
+                        <option value="{{ $key }}">{{ $val }}</option>
+                        @endforeach
+                    </select>
+                    @error('hari')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Jam Awal</label>
+                            <input type="number" wire:model="jam_awal" class="form-control @error('jam_awal') is-invalid @enderror" placeholder="Jam Awal">
+                            @error('jam_awal')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Jam Akhir</label>
+                            <input type="number" wire:model="jam_akhir" class="form-control @error('jam_akhir') is-invalid @enderror" placeholder="Jam Akhir">
+                            @error('jam_akhir')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
             </div>

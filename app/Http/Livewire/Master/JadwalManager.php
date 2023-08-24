@@ -45,6 +45,7 @@ class JadwalManager extends Component
         ->with('ruangan:code,name');
 
         if(!empty($this->searchKeyword)){
+            $jadwal->orWhere('kelas_code','like',"%".$this->searchKeyword."%");
             $jadwal->orWhere('matpel.name','like',"%".$this->searchKeyword."%");
             $jadwal->orWhere('guru.name','like',"%".$this->searchKeyword."%");
             $jadwal->orWhere('ruangan.name','like',"%".$this->searchKeyword."%");
@@ -98,39 +99,48 @@ class JadwalManager extends Component
         if(empty($this->set_id))
         {
             $valid = $this->validate([
-                'code' => [
+                'tapel_code' => [
                     'required',
-                    'max:30',
-                    'alpha_num:ascii',
-                    //'unique:jadwal,code'
                     Rule::unique('jadwal')->where(function ($query) {
                         return $query
                           ->where('tapel_code', $this->tapel_code)
                           ->where('kelas_code', $this->kelas_code)
                           ->where('guru_code', $this->guru_code)
                           ->where('hari', $this->hari)
-                          ->where('jam_mulai', $this->jam_mulai);
+                          ->where('jam_awal', $this->jam_awal);
                      })
                 ],
+                'kelas_code' => 'required',
+                'matpel_code' => 'required',
+                'guru_code' => 'required',
+                'ruangan_code' => 'required',
+                'hari' => 'required',
+                'jam_awal' => 'required|integer|min:1',
+                'jam_akhir' => 'required|integer|min:1',
             ]);
             Jadwal::create($valid);
         }
         else
         {
             $valid = $this->validate([
-                'code' => [
+                'tapel_code' => [
                     'required',
-                    'max:30',
-                    'alpha_num:ascii',
                     Rule::unique('jadwal')->where(function ($query) {
                         return $query
                           ->where('tapel_code', $this->tapel_code)
                           ->where('kelas_code', $this->kelas_code)
                           ->where('guru_code', $this->guru_code)
                           ->where('hari', $this->hari)
-                          ->where('jam_mulai', $this->jam_mulai);
+                          ->where('jam_awal', $this->jam_awal);
                      })->ignore($this->set_id)
                 ],
+                'kelas_code' => 'required',
+                'matpel_code' => 'required',
+                'guru_code' => 'required',
+                'ruangan_code' => 'required',
+                'hari' => 'required',
+                'jam_awal' => 'required|integer|min:1',
+                'jam_akhir' => 'required|integer|min:1',
             ]);
             $jadwal = Jadwal::find($this->set_id);
             $jadwal->update($valid);

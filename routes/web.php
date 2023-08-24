@@ -18,6 +18,7 @@ use App\Http\Livewire\Master\JabatanManager;
 use App\Http\Livewire\Master\RuanganManager;
 use App\Http\Livewire\Master\KelasManager;
 use App\Http\Livewire\Master\JadwalManager;
+use App\Http\Livewire\Master\RombelManager;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,6 @@ use App\Http\Livewire\Master\JadwalManager;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 // Auth
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
@@ -58,9 +55,14 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/ruangan', RuanganManager::class)->name('master.ruangan');
         Route::get('/kelas', KelasManager::class)->name('master.kelas');
         Route::get('/jadwal-pelajaran', JadwalManager::class)->name('jadwal-pelajaran');
+        Route::get('/rombongan-belajar', RombelManager::class)->name('rombongan-belajar');
     });
 
     Route::post('/menu-save-order',[MenuApiController::class,'save_order']);
     Route::post('/menu-save-parent',[MenuApiController::class,'save_parent']);
 
 });
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
